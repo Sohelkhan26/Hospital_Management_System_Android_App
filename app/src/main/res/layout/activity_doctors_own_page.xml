@@ -4,49 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-
     android:orientation="vertical"
-    tools:context=".Hospital_Name">
-
+    android:gravity="center"
+    tools:context=".Doctors_Own_Page">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HOSPITAL"
+        android:text="Hello"
         android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Hospital Name"
-        android:id="@+id/hospitalNameID"
+        android:textStyle="bold"
         />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Hospital ID"
-        android:id="@+id/hospitalidID"
-        />
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Hospital Password"
-        android:id="@+id/hospitalPasswordID"
-        />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Create"
-        android:id="@+id/HospitalButtonID"
-        />
-
     <TextView
-        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Doctor Name"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:id="@+id/doctorNameID"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Here the list you should check-in"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        />
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:visibility="visible" />
-
-
+        android:id="@+id/doctorOwnListID"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nurse Name"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:id="@+id/doctorsAppointedNurseID"
+        />
 </LinearLayout>
