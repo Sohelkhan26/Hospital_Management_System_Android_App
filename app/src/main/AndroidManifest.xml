@@ -17,6 +17,8 @@
             android:exported="false" />
         <activity android:name=".Revive"
             android:exported="false" />
+        <activity android:name=".HospitalLogIN"
+            android:exported="false" />
         <activity
             android:name=".Hospital_Name"
             android:exported="false" />

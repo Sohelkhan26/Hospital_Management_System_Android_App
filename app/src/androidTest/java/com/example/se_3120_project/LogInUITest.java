@@ -152,6 +152,11 @@ public class LogInUITest {
     {
         Espresso.onView((ViewMatchers.withId(R.id.hospitalLogInID)))
                 .perform(ViewActions.click());
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         Espresso.onView(ViewMatchers.withId(R.id.LogINhospitalNameID))
                 .check(matches(isDisplayed()));
     }
