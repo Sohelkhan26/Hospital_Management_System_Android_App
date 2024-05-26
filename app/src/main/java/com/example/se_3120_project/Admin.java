@@ -31,8 +31,8 @@ public class Admin extends AppCompatActivity {
         adminBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String idTxt=id.getText().toString();
-                final String passTxt=pass.getText().toString();
+                final String idTxt=id.getText().toString().trim();
+                final String passTxt=pass.getText().toString().trim();
 
                 if(idTxt.isEmpty() || passTxt.isEmpty())
                 {
@@ -59,7 +59,6 @@ public class Admin extends AppCompatActivity {
                             else
                             {
                                 Toast.makeText(Admin.this,"Admin not found",Toast.LENGTH_SHORT).show();
-
                             }
 
                         }

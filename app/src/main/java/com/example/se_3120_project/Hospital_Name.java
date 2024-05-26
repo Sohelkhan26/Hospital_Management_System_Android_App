@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.se_3120_project.ConnectToFireBase;
@@ -40,7 +41,8 @@ public class Hospital_Name extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         databaseReference.child("user").child("Hospital").child(getName).child("Name").setValue(getName);
                         databaseReference.child("user").child("Hospital").child(getName).child("Password").setValue(getPass);
-                        Toast.makeText(Hospital_Name.this,"Created",Toast.LENGTH_SHORT).show();
+                        TextView textView = findViewById(R.id.textView2);
+                        textView.setText("Hospital Successfully added");
                     }
 
                     @Override

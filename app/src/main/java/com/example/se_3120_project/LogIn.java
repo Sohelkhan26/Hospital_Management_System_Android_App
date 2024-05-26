@@ -38,10 +38,10 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //final String nameTxt=name.getText().toString();
-                final String cardTxt=card.getText().toString();
-                final String emailTxt=email.getText().toString();
-                final String passTxt=pass.getText().toString();
-
+                final String cardTxt=card.getText().toString().trim();
+                final String emailTxt=email.getText().toString().trim();
+                final String passTxt=pass.getText().toString().trim();
+//                Toast.makeText(LogIn.this , "Email: " + emailTxt + " Password: " + passTxt, Toast.LENGTH_SHORT).show();
                 if(cardTxt.isEmpty() || emailTxt.isEmpty()|| passTxt.isEmpty())
                 {
                     Toast.makeText(LogIn.this,"Please Fill All Requirement",Toast.LENGTH_SHORT).show();
@@ -56,15 +56,17 @@ public class LogIn extends AppCompatActivity {
                                 //Toast.makeText(SignUp.this,"Already ID Exists",Toast.LENGTH_SHORT).show();
                                 final String getEmail=snapshot.child(cardTxt).child("Email").getValue(String.class);
                                 final String getPass=snapshot.child(cardTxt).child("Password").getValue(String.class);
+                                Toast.makeText(LogIn.this,getEmail + " " + getPass,Toast.LENGTH_SHORT).show();
                                 if((getEmail.equals(emailTxt)) && (getPass.equals(passTxt)))
                                 {
+//                                    Toast.makeText(LogIn.this, getEmail + " " + getPass, Toast.LENGTH_SHORT).show();
                                     Toast.makeText(LogIn.this,"Log in Successful",Toast.LENGTH_SHORT).show();
 
-                                    // Revive Activity is going to be added shortly 4/25/2024
+//                                     Revive Activity is going to be added shortly 4/25/2024
 
-//                                    Intent intent=new Intent(LogIn.this, Revive.class);
-//                                    intent.putExtra("PatientID",cardTxt);
-//                                    startActivity(intent);
+                                    Intent intent=new Intent(LogIn.this, Revive.class);
+                                    intent.putExtra("PatientID",cardTxt);
+                                    startActivity(intent);
                                 }
                                 else
                                     Toast.makeText(LogIn.this,"Wrong Password ",Toast.LENGTH_SHORT).show();
@@ -78,7 +80,7 @@ public class LogIn extends AppCompatActivity {
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            Toast.makeText(LogIn.this , "Couldn't connect to the database", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -107,11 +109,11 @@ public class LogIn extends AppCompatActivity {
             }
         });
 //
-//        hospitalBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(LogIn.this, HospitalLogIN.class));
-//            }
-//        });
+        hospitalBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LogIn.this, HospitalLogIN.class));
+            }
+        });
     }
 }
