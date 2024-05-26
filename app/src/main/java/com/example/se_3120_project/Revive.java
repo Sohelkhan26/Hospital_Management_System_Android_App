@@ -33,9 +33,9 @@ public class Revive extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revive);
 
-        listView = this.<ListView>findViewById(R.id.patientListID);
-        textView= this.<TextView>findViewById(R.id.patientTextID);
-        spinner=findViewById(R.id.patientSpinnerID);
+//        listView = this.<ListView>findViewById(R.id.patientListID)
+//        textView= this.<TextView>findViewById(R.id.patientTextID);
+//        spinner=findViewById(R.id.patientSpinnerID);
 
         // Set up a listener for hospital selection
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
