@@ -1,5 +1,8 @@
 package com.example.se_3120_project;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,12 +13,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +42,7 @@ public class Doctor extends AppCompatActivity {
         final TextView textView = findViewById(R.id.texviewID);
         final String[] selectedValue = new String[1];
 
+        // Load hospital names from Firebase and populate the spinner
         databaseReference.child("user").child("Hospital").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -49,45 +51,61 @@ public class Doctor extends AppCompatActivity {
                 for (DataSnapshot childSnapshot : snapshot.getChildren()) {
                     String data = childSnapshot.child("Name").getValue(String.class);
                     if (data != null) {
+                        Toast.makeText(Doctor.this, data, Toast.LENGTH_SHORT).show();
                         stringList.add(data);
                     }
                 }
 
-                String[] strings = stringList.toArray(new String[0]);
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(Doctor.this, android.R.layout.simple_spinner_item, strings);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(Doctor.this, android.R.layout.simple_spinner_item, stringList);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
 
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                        textView.setText((String) adapterView.getItemAtPosition(i));
+                        selectedValue[0] = (String) adapterView.getItemAtPosition(i);
+                        textView.setText(selectedValue[0]);
                     }
 
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
+                        selectedValue[0] = null;
                     }
                 });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Doctor.this, "Failed to load hospital data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
+        // Register a doctor on button click
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String getName = Name.getText().toString();
-                String getID = id.getText().toString();
-                String getPass = password.getText().toString();
+                String getName = Name.getText().toString().trim();
+                String getID = id.getText().toString().trim();
+                String getPass = password.getText().toString().trim();
 
-                databaseReference.child("user").child("Hospital").child(selectedValue[0]).child("Doctors").addListenerForSingleValueEvent(new ValueEventListener() {
+                if (selectedValue[0] == null) {
+                    Toast.makeText(Doctor.this, "Please select a hospital", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (getName.isEmpty() || getID.isEmpty() || getPass.isEmpty()) {
+                    Toast.makeText(Doctor.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                DatabaseReference doctorRef = databaseReference.child("user").child("Hospital").child(selectedValue[0]).child("Doctors");
+
+                doctorRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (snapshot.hasChild(getID)) {
-                            databaseReference.child("user").child("Hospital").child(selectedValue[0]).child("Doctors").child(getID).child("Name").setValue(getName);
-                            databaseReference.child("user").child("Hospital").child(selectedValue[0]).child("Doctors").child(getID).child("Password").setValue(getPass);
+                            doctorRef.child(getID).child("Name").setValue(getName);
+                            doctorRef.child(getID).child("Password").setValue(getPass);
                             databaseReference.child("user").child("Doctors").child(getID).child("ID").setValue(getID);
                             databaseReference.child("user").child("Doctors").child(getID).child("Name").setValue(getName);
                             databaseReference.child("user").child("Doctors").child(getID).child("Serial");
@@ -104,7 +122,7 @@ public class Doctor extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(Doctor.this, "Failed to read data from Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Doctor.this, "Failed to read data from Firebase: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
