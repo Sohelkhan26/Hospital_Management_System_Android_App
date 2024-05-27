@@ -1,25 +1,18 @@
 package com.example.se_3120_project;
-import androidx.test.core.app.ActivityScenario;
+
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
-
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
-import android.view.View;
 
 import java.util.UUID;
 
@@ -102,7 +95,7 @@ public class LogInUITest {
         }
 
         // Check that the login was successful by checking if the Revive activity is displayed
-        Espresso.onView(ViewMatchers.withId(R.id.patientTextID))
+        Espresso.onView(ViewMatchers.withId(R.id.editTextTextEmailAddress))
                 .check(matches(isDisplayed()));
     }
     @Test
@@ -137,7 +130,7 @@ public class LogInUITest {
         {
             throw new RuntimeException(e);
         }
-        Espresso.onView(ViewMatchers.withId(R.id.textView2)).check(matches(withText("Hospital Successfully added")));
+        Espresso.onView(ViewMatchers.withId(R.id.textView)).check(matches(withText("Hospital Successfully added")));
     }
     @Test
     public void doctorButtonClicked()
