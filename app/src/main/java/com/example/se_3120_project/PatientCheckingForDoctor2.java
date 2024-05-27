@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 
 public class PatientCheckingForDoctor2 extends AppCompatActivity {
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://project-070-hospital-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference = ConnectToFireBase.getInstance();
     EditText diseaseEditText, reportEditText, medicineEditText;
     Button button;
     String patientName;

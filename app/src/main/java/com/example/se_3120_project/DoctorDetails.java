@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DoctorDetails extends AppCompatActivity {
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://project-070-hospital-default-rtdb.firebaseio.com/");
+    DatabaseReference databaseReference = ConnectToFireBase.getInstance();
     TextView textView, textView1, textView2, textView3;
     Button button, datebtn;
     boolean hasObtainedSerial = false;
@@ -90,12 +90,12 @@ public class DoctorDetails extends AppCompatActivity {
         });
     }
 
-    private String getNextDate() {
+    public String getNextDate() {
         Calendar calender = Calendar.getInstance();
         calender.add(Calendar.DAY_OF_YEAR, 1);
         return new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(calender.getTime());
     }
-    private void setSerialNumber() {
+    public void setSerialNumber() {
         databaseReference.child("user").child("Doctors").child(doctorID).child("Appointment").child("Tomorrow").child("Serial").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -182,7 +182,7 @@ public class DoctorDetails extends AppCompatActivity {
        // databaseReference.child("user").child("Doctors").child(doctorID).child("Appointment").child("Tomorrow").child("Serial").setValue(0);
         finish();
     }
-    private String getCurrentDate() {
+    public String getCurrentDate() {
         return new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
     }
 }
